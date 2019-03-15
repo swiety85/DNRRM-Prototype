@@ -1,0 +1,11 @@
+FROM node:10
+
+WORKDIR /var/server
+
+COPY package*.json /var/server/
+
+RUN npm install --only=production
+
+COPY . /var/server/
+
+CMD [ "sh", "-c", "npm run prestart:prod && npm run start:prod"]

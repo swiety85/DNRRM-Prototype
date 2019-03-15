@@ -1,0 +1,11 @@
+localhost:8080
+gzip
+
+proxy / client:3000
+proxy /sockjs-node client:3000 {
+    header_upstream Connection {>Connection}
+    header_upstream Upgrade {>Upgrade}
+}
+
+proxy /api server:8000
+

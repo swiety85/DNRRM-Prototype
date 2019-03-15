@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+    client:
+        container_name: client
+        build:
+            context: ./client
+            dockerfile: Dockerfile.prod
+        expose:
+            - ${CLIENT_APP_PORT}
+        links:
+            - server
+
+    server:
+        container_name: server
+        restart: always
+        build:
+            context: ./server
+            dockerfile: Dockerfile.prod
+        expose:
+            - ${SERVER_APP_PORT}
+
+    proxy:
+        image: abiosoft/caddy
+        ports:
+            - '80:80'
+            - '443:443'
+            - '8080:8080'
+        links:
+            - client
+            - server
+        volumes:
+            - './Caddyfile.prod:/etc/Caddyfile'
+            - './.caddy:/root/.caddy'

@@ -1,0 +1,6 @@
+localhost:8080
+gzip
+
+proxy / client:3000
+proxy /api server:8000
+
