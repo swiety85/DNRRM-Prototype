@@ -1,0 +1,19 @@
+# Use an official Node LTS (long term support) version Carbon as a parent image
+FROM node:10 as builder
+
+WORKDIR /var/client
+
+COPY package*.json /var/client/
+
+RUN npm install --only=production
+
+COPY . /var/client/
+
+CMD [ "npm", "run", "build" ]
+
+
+FROM abiosoft/caddy:no-stats
+
+COPY --from=builder /var/client/build /srv
+
+COPY ./Caddyfile /etc/Caddyfile
