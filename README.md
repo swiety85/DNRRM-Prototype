@@ -8,9 +8,10 @@
 * (/) create node.js server
 * connect MongoDB
 * (/) create React FE app
-* connect Bootstrap with SCSS
-* connect Redux
+* (/) connect Bootstrap with SCSS
+* create some FE routes
 * simple BE API for Users and Products
+* connect Redux
 * build dashboard view
 * build table view
 * build form view
