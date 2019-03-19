@@ -6,7 +6,7 @@
 * (/) create docker environment for development
 * (/) create docker environment for production
 * (/) create node.js server
-* connect MongoDB
+* (/) connect MongoDB
 * (/) create React FE app
 * (/) connect Bootstrap with SCSS
 * create some FE routes
