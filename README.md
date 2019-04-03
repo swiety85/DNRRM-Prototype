@@ -12,7 +12,7 @@
 * (/) create some FE routes
 * (/) simple BE API for Users and Products
 * (/) build the login form
-* create JWT authentication
+* (/) create JWT authentication
 * build dashboard view
 * build table view
 * build form view
