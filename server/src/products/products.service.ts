@@ -6,14 +6,14 @@ import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectModel('Product') private readonly catModel: Model<Product>) {}
+  constructor(@InjectModel('Product') private readonly productModel: Model<Product>) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const createdCat = new this.catModel(createProductDto);
+    const createdCat = new this.productModel(createProductDto);
     return await createdCat.save();
   }
 
   async findAll(): Promise<Product[]> {
-    return await this.catModel.find().exec();
+    return await this.productModel.find().exec();
   }
 }

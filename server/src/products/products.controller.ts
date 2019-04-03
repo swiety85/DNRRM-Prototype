@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductsService } from './products.service';
 import { Product } from './interfaces/product.interface';
 
-@Controller('api/product')
+@Controller('api/products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -13,6 +14,7 @@ export class ProductsController {
   }
 
   @Get()
+  // @UseGuards(AuthGuard())
   async findAll(): Promise<Product[]> {
     return this.productsService.findAll();
   }
