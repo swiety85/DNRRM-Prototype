@@ -1,29 +1,17 @@
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { UsersService } from './../users/users.service';
-import {
-  Controller,
-  Post,
-  Body,
-  UnauthorizedException,
-  Res,
-} from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
+import { Controller, Post, Body, UnauthorizedException, Res } from '@nestjs/common';
+import { UsersService } from './users.service';
 
 @Controller('api/auth')
 export class AuthController {
-  private usersService: UsersService;
   constructor(
-    private readonly moduleRef: ModuleRef,
+    private readonly usersService: UsersService,
     private readonly authService: AuthService,
   ) {}
 
-  onModuleInit() {
-    this.usersService = this.moduleRef.get(UsersService, { strict: false });
-  }
-
   @Post('login')
-  async create(@Body() loginDto: LoginDto, @Res() res: any) {
+  async login(@Body() loginDto: LoginDto, @Res() res: any) {
     if (!loginDto.email || !loginDto.password) {
       throw new UnauthorizedException();
     }
@@ -35,10 +23,9 @@ export class AuthController {
     if (!isPasswordValid) {
       throw new UnauthorizedException();
     }
-
     const token = await this.authService.signIn(user);
 
-    res.cookie('jwt', token, {
+    res.cookie(process.env.JWT_PARAM_NAME, token, {
       httpOnly: true,
       sameSite: true,
       signed: true,
@@ -47,5 +34,13 @@ export class AuthController {
     return res.json({
       jwt: token,
     });
+  }
+
+  @Post('logout')
+  async logout(@Res() res: any) {
+
+    res.clearCookie(process.env.JWT_PARAM_NAME);
+
+    return res.json({});
   }
 }

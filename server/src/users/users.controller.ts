@@ -6,13 +6,9 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
-
-  @Post()
-  @UseGuards(AuthGuard())
-  async create(@Body() createProductDto: CreateUserDto) {
-    this.usersService.create(createProductDto);
-  }
+  constructor(
+    private readonly usersService: UsersService,
+  ) {}
 
   @Get()
   @UseGuards(AuthGuard())
@@ -20,15 +16,10 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get('setup')
-  async setup(): Promise<any> {
-    const userData = {
-      name: 'Damian Wajdlich',
-      password: 'password',
-      email: 'swiety85@gmail.com',
-    };
-
-    this.usersService.create(userData);
-    return { success: true };
+  @Post()
+  @UseGuards(AuthGuard())
+  async create(@Body() createProductDto: CreateUserDto) {
+    this.usersService.create(createProductDto);
   }
+
 }

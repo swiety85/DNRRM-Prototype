@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Link } from "react-router-dom";
-import Home from "./home/Home";
+import Home from "../home";
 
 function Admin({ match }) {
     return <div className="admin__container">

@@ -9,15 +9,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: (req) => {
+        const jwtProperty = process.env.JWT_PARAM_NAME;
+        
         // try to read it from cookies (browser)
-        if (req.signedCookies && req.signedCookies.jwt) {
-          return req.signedCookies.jwt;
+        if (req.signedCookies && req.signedCookies[jwtProperty]) {
+          return req.signedCookies[jwtProperty];
         // fall back to headers (cross server communication)
-        } else if (req.headers && req.headers.jwt) {
-          return req.get('jwt');
+        } else if (req.headers && req.headers[jwtProperty]) {
+          return req.get(jwtProperty);
         }
       },
-      secretOrKey: 'secretKey',
+      secretOrKey: process.env.JWT_SECRET,
     });
   }
 
