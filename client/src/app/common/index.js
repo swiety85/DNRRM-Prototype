@@ -1,0 +1,1 @@
+export { default as IconWindow } from "./components/iconWindow/IconWindow";

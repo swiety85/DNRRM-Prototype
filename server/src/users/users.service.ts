@@ -27,4 +27,12 @@ export class UsersService {
   async findById(id: string): Promise<User[]> {
     return await this.userModel.findById(id).exec();
   }
+
+  async getUserByEmailAndPass(email, password) {
+    const user: any = await this.findOneByEmail(email);
+    const isPasswordValid = user && (await user.comparePassword(password));
+
+    return isPasswordValid ? user : null;
+  }
+
 }

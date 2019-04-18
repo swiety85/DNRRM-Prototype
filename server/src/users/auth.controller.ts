@@ -1,6 +1,7 @@
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { Controller, Post, Body, UnauthorizedException, Res } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException, Res, Req, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller('api/auth')
@@ -11,28 +12,23 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async login(@Body() loginDto: LoginDto, @Res() res: any) {
-    if (!loginDto.email || !loginDto.password) {
+  async login(@Body() {email, password}: LoginDto, @Res() res: any) {
+    if (!email || !password) {
+      throw new UnauthorizedException();
+    }
+    const user = await this.usersService.getUserByEmailAndPass(email, password);
+
+    if (!user) {
       throw new UnauthorizedException();
     }
 
-    const user: any = await this.usersService.findOneByEmail(loginDto.email);
-    const isPasswordValid =
-      user && (await user.comparePassword(loginDto.password));
-
-    if (!isPasswordValid) {
-      throw new UnauthorizedException();
-    }
     const token = await this.authService.signIn(user);
 
-    res.cookie(process.env.JWT_PARAM_NAME, token, {
-      httpOnly: true,
-      sameSite: true,
-      signed: true,
-    });
+    this.setCookieToken(res, token);
 
     return res.json({
       jwt: token,
+      user: { ...user.toObject(), password: null },
     });
   }
 
@@ -43,4 +39,30 @@ export class AuthController {
 
     return res.json({});
   }
+
+  @Get('loggedInUser')
+  @UseGuards(AuthGuard())
+  async loggedInUser(@Req() req: any) {
+    return { ...req.user.toObject(), password: null };
+  }
+
+  private async getUserByEmailAndPass({email, password}: LoginDto) {
+    if (!email || !password) {
+      return null;
+    }
+
+    const user: any = await this.usersService.findOneByEmail(email);
+    const isPasswordValid = user && (await user.comparePassword(password));
+
+    return isPasswordValid ? user : null;
+  }
+
+  private setCookieToken(res: any, token: string): void {
+    res.cookie(process.env.JWT_PARAM_NAME, token, {
+      httpOnly: true,
+      sameSite: true,
+      signed: true,
+    });
+  }
+
 }
