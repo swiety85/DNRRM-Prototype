@@ -8,7 +8,8 @@ import './LoginPage.scss';
 
 class Login extends React.Component {
   handleSubmit = ({email, password}) => {
-    this.props.actions.login (email, password);
+    this.props.actions.login (email, password)
+      .then(() => this.props.history.push('/'));
   };
 
   render () {
