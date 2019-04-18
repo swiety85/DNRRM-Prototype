@@ -13,10 +13,11 @@
 * (/) simple BE API for Users and Products
 * (/) build the login form
 * (/) create JWT authentication
+* (/) connect Redux
+* build admin layout
 * build dashboard view
 * build table view
 * build form view
-* connect Redux
 * create authentication by Google
 * progressive app
 
