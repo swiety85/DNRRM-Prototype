@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {withRouter} from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import {IconWindow} from '../../common';
 import {actions} from '..';
@@ -8,8 +9,9 @@ import './LoginPage.scss';
 
 class Login extends React.Component {
   handleSubmit = ({email, password}) => {
-    this.props.actions.login (email, password)
-      .then(() => this.props.history.push('/'));
+    this.props.actions
+      .login (email, password)
+      .then (() => this.props.history.push ('/'));
   };
 
   render () {
@@ -29,8 +31,10 @@ class Login extends React.Component {
   }
 }
 
-export default connect (null, dispatch => {
-  return {
-    actions: bindActionCreators (actions, dispatch),
-  };
-}) (Login);
+export default withRouter (
+  connect (null, dispatch => {
+    return {
+      actions: bindActionCreators (actions, dispatch),
+    };
+  }) (Login)
+);

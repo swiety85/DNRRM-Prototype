@@ -6,8 +6,10 @@
 // $primary: #2C3B55;
 // $secondary: #E8E9EC;
 $input-font-size: 0.9rem;
+$navbar-default-bg: #1C1E2A;
 
 @import "./../../node_modules/bootstrap/scss/bootstrap";
+@import "./../../node_modules/bootstrap/scss/reboot";
 
 label {
     font-size: 0.8rem;

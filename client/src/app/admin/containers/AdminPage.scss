@@ -1,0 +1,14 @@
+$header-height: 56px;
+
+.admin {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    &__body {
+        padding-top: $header-height;
+        flex-grow: 1;
+    }
+}

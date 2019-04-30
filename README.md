@@ -1,6 +1,20 @@
 # DNRRM Prototype
 ### Docker - Nest - React - Redux - MongoDB
 
+## How to start:
+
+Dev:
+```
+docker-compose up -d
+```
+
+url: localhost:8080
+
+Prod:
+```
+docker-compose up -d -f docker-compose.prod.yml
+```
+
 ## Gools:
 
 * (/) create docker environment for development
@@ -24,3 +38,4 @@
 ### Links
 * https://react-bootstrap-table.github.io/react-bootstrap-table2/
 * https://react-bootstrap.github.io/
+* https://dribbble.com/shots/2087381-3-Levels-Side-Menu/attachments/375726

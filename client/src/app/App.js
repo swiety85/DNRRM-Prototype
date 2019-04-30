@@ -23,9 +23,9 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/" component={Admin} />
-          <Route path="/admin" component={Admin} />
+          <Route exact path="/login" render={(routeProps) => <LoginPage {...routeProps}/>} />
+          <Route exact path="/" render={(routeProps) => <Admin {...routeProps}/>} />
+          <Route path="/admin" render={(routeProps) => <Admin {...routeProps}/>} />
         </ConnectedRouter>
       </Provider>
     );

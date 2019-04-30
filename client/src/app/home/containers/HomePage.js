@@ -10,14 +10,14 @@ function Home () {
   };
 
   return (
-    <div className="admin">
-      <header className="admin__header">
-        <img src={logo} className="admin__logo" alt="logo" />
+    <div className="adminx">
+      <header className="adminx__header">
+        <img src={logo} className="adminx__logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
-          className="admin__link"
+          className="adminx__link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
